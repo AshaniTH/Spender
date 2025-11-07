@@ -1,12 +1,14 @@
-import 'dotenv/config';
-import { defineConfig } from 'drizzle-kit';
+import dotenv from 'dotenv';
+import { defineConfig } from 'drizzle-kit'
+
+// Load environment variables from .env.local so Drizzle can read DATABASE_URL
+dotenv.config({ path: '.env.local' });
 
 export default defineConfig({
   out: './drizzle',
-  schema: './src/db/schema.ts',
+  schema: './utils/schema.jsx',
   dialect: 'postgresql',
   dbCredentials: {
     url: process.env.DATABASE_URL,
   },
-}
-);
+});
