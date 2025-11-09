@@ -66,21 +66,21 @@ function CreateBudget() {
       
         <Dialog>
   <DialogTrigger asChild>
-      <div className='bg-green-100 p-10 rounded-md items-center flex flex-col border-2 border-green- border-dashed cursor-pointer hover:shadow-md'>
-            <h2 className='text-3xl'>+</h2>
-            <h2>Create New Budget</h2>
+      <div className='bg-green-100 p-10 rounded-md items-center flex flex-col border-2 border-green- border-dashed cursor-pointer hover:shadow-md '>
+            <h2 className='text-3xl font-bold'>+</h2>
+            <h2 className='font-semibold '>Create New Budget</h2>
         </div>
 
   </DialogTrigger>
   <DialogContent>
     <DialogHeader>
-      <DialogTitle>Create New Budget</DialogTitle>
+      <DialogTitle >Create New Budget</DialogTitle>
       <DialogDescription>
         <div className='mt-5'>
         <Button className={'border-green-300'} variant="outline"
         onClick={()=>setOpenEmojiPicker(!openEmojiPicker)}
         >{emojiIcon}</Button>
-        <div className='absolute'>
+        <div className='absolute z-20'>
       <EmojiPicker 
       open = {openEmojiPicker}
       onEmojiClick={(e)=>{setEmojiIcon(e.emoji)

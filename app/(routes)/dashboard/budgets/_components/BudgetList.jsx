@@ -39,9 +39,11 @@ function BudgetList() {
         setBudgetList([])
         return
       }
-      const data = await res.json()
-      // API returns { success: true, rows }
-      setBudgetList(data?.rows ?? [])
+  const data = await res.json()
+  // debug: log API response
+  console.debug('GET /api/budgets response:', data)
+  // API returns { success: true, rows }
+  setBudgetList(data?.rows ?? [])
     } catch (err) {
       console.error('Error fetching budgets', err)
       setBudgetList([])

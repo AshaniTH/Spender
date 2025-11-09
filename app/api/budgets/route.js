@@ -1,6 +1,6 @@
 import { db } from '@/utils/dbConfig'
-import { budgets } from '@/utils/schema'
-import { eq } from 'drizzle-orm'
+import { budgets, Expenses } from '@/utils/schema'
+import { eq, getTableColumns, sql } from 'drizzle-orm'
 
 export async function POST(req) {
   try {
@@ -33,9 +33,24 @@ export async function GET(req) {
       return new Response(JSON.stringify({ message: 'Missing email query param' }), { status: 400 });
     }
 
-    const rows = await db.select().from(budgets).where(eq(budgets.created_by, email));
+    // Select budget columns explicitly (flat keys) + aggregated totals from expenses
+    const rows = await db
+      .select({
+        id: budgets.id,
+        name: budgets.name,
+        icon: budgets.icon,
+        amount: budgets.amount,
+        created_by: budgets.created_by,
+        created_at: budgets.created_at,
+        totalSpend: sql`sum(${Expenses.amount})`.mapWith(Number),
+        totalItem: sql`count(${Expenses.id})`.mapWith(Number),
+      })
+      .from(budgets)
+      .leftJoin(Expenses, eq(budgets.id, Expenses.budgetId))
+      .where(eq(budgets.created_by, email))
+      .groupBy(budgets.id, budgets.name, budgets.icon, budgets.amount, budgets.created_by, budgets.created_at)
 
-    return new Response(JSON.stringify({ success: true, rows }), { status: 200 });
+    return new Response(JSON.stringify({ success: true, rows }), { status: 200 })
   } catch (err) {
     console.error('API /api/budgets GET error:', err);
     return new Response(JSON.stringify({ message: err?.message || 'Internal Server Error' }), { status: 500 });
