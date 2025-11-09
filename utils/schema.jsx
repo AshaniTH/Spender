@@ -1,4 +1,4 @@
-import { pgTable, serial, varchar, timestamp } from 'drizzle-orm/pg-core'
+import { pgTable, serial, varchar, timestamp, integer } from 'drizzle-orm/pg-core'
 
 export const budgets = pgTable('budgets', {
 	id: serial('id').primaryKey(),
@@ -9,4 +9,12 @@ export const budgets = pgTable('budgets', {
 	created_at: timestamp('created_at').defaultNow(),
 })
 
+export const Expenses = pgTable('expenses',{	
+	id:serial('id').primaryKey(),
+	name:varchar('name', { length: 255 }).notNull(),
+	amount: varchar('amount', { length: 100 }).notNull(),
+	budgetId:integer('budgetId').references(()=>budgets.id),
+	created_by: varchar('created_by', { length: 255 }).notNull(),
+	
 
+})
