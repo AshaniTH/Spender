@@ -18,12 +18,24 @@ function DashboardLayout({children}) {
   }, [user]);
 
   const checkUserBudgets = async () => {
-    const result = await db.select().from(budgets)
-      .where(eq(budgets.created_by, user?.primaryEmailAddress?.emailAddress));
+    try {
+      const email = user?.primaryEmailAddress?.emailAddress;
+      if (!email) return;
 
-    console.log(result);
-    if (result?.length == 0) {
-      router.replace('/dashboard/budgets');
+      const res = await fetch(`/api/budgets?email=${encodeURIComponent(email)}`);
+      if (!res.ok) {
+        console.error('Failed to check user budgets', await res.text());
+        return;
+      }
+
+      const data = await res.json();
+      const rows = data?.rows || [];
+
+      if (rows.length === 0) {
+        router.replace('/dashboard/budgets');
+      }
+    } catch (err) {
+      console.error('checkUserBudgets error:', err);
     }
   };
 
