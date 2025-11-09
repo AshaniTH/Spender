@@ -7,6 +7,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
+  DialogClose
 } from "@/components/ui/dialog"
 import EmojiPicker from 'emoji-picker-react'
 import { Button } from '@/components/ui/button'
@@ -93,12 +95,17 @@ function CreateBudget() {
         </h2>
         <Input type="number" onChange={(e) => setAmount(e.target.value)} className={'border-green-300'} placeholder="e.g. Rs:500.00"/>
     </div>
-  <Button disabled={ !(name && amount)} className={'mt-5 w-full'}
-  onClick={onCreateBudget}
-  >Create Budget</Button>
+  
     </div>
       </DialogDescription>
     </DialogHeader>
+     <DialogFooter className="sm:justify-start">
+          <DialogClose asChild>
+           <Button disabled={ !(name && amount)} className={'mt-5 w-full'}
+  onClick={onCreateBudget}
+  >Create Budget</Button>
+          </DialogClose>
+        </DialogFooter>
   </DialogContent>
 </Dialog>
     </div>
