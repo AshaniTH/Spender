@@ -1,27 +1,31 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import SideNav from './_components/SideNav'
 import DashboardHeader from './_components/DashboardHeader'
 import { db } from '@/utils/dbConfig'
 import { budgets } from '@/utils/schema'
 import { eq } from 'drizzle-orm'
+import { useUser } from '@clerk/nextjs'
+import { useRouter } from 'next/navigation'
 
 function DashboardLayout({children}) {
 
-  const {user} = useUser();
+  const { user } = useUser();
+  const router = useRouter();
 
-  useEffect(()=>{
-    user&&checkUserBudgets();
-  },[user])
-const checkUserBudgets = async () => {
-  const result = await db.select().from(budgets)
-  .where(eq(budgets.created_by,user?.primaryEmailAddress?.emailAddress))
+  useEffect(() => {
+    user && checkUserBudgets();
+  }, [user]);
 
-  console.log(result);
-  if(result ?.length==0){
-    router.replace('/dashboard/budgets')
-  }
-}
+  const checkUserBudgets = async () => {
+    const result = await db.select().from(budgets)
+      .where(eq(budgets.created_by, user?.primaryEmailAddress?.emailAddress));
+
+    console.log(result);
+    if (result?.length == 0) {
+      router.replace('/dashboard/budgets');
+    }
+  };
 
   return (
     <div>
