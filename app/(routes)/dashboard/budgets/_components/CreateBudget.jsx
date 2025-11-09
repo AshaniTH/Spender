@@ -46,6 +46,11 @@ function CreateBudget() {
 
       toast.success('New budget created!');
 
+      // notify other components to refresh budget list
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('budgets:updated'))
+      }
+
       // optionally reset form
       setname('');
       setAmount('');
