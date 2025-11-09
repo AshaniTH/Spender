@@ -28,13 +28,14 @@ export async function GET(req) {
   try {
     const url = new URL(req.url);
     const email = url.searchParams.get('email');
+    const id = url.searchParams.get('id');
 
     if (!email) {
       return new Response(JSON.stringify({ message: 'Missing email query param' }), { status: 400 });
     }
 
-    // Select budget columns explicitly (flat keys) + aggregated totals from expenses
-    const rows = await db
+    // Build base query selecting explicit columns and aggregates
+    let query = db
       .select({
         id: budgets.id,
         name: budgets.name,
@@ -48,7 +49,17 @@ export async function GET(req) {
       .from(budgets)
       .leftJoin(Expenses, eq(budgets.id, Expenses.budgetId))
       .where(eq(budgets.created_by, email))
-      .groupBy(budgets.id, budgets.name, budgets.icon, budgets.amount, budgets.created_by, budgets.created_at)
+
+    // If id provided, validate and filter by id
+    if (id) {
+      const numericId = Number(id)
+      if (Number.isNaN(numericId)) {
+        return new Response(JSON.stringify({ message: 'Invalid id param' }), { status: 400 })
+      }
+      query = query.where(eq(budgets.id, numericId))
+    }
+
+    const rows = await query.groupBy(budgets.id, budgets.name, budgets.icon, budgets.amount, budgets.created_by, budgets.created_at)
 
     return new Response(JSON.stringify({ success: true, rows }), { status: 200 })
   } catch (err) {

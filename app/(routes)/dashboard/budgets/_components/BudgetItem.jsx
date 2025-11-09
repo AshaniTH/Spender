@@ -1,37 +1,32 @@
-
+"use client"
 import React from 'react'
+import Link from 'next/link'
 
 function BudgetItem({ budget }) {
-  return (
-    <div className='p-5 border rounded-lg gap-2 hover:shadow-md cursor-pointer '>
-        <div className='flex gap-2 items-center justify-between'> 
-        <div className='flex gap-2 items-center'>
-            <h2 className='text-2xl p-5 px-4 bg-green-100 rounded-full'>{budget?.icon}</h2>
-        
-        <div className='font-semibold'>
-            <h2 className=''>{budget?.name}</h2>
-        <h2 className='text-sm text-gray-500'>{budget?.totalItem} Item</h2>
-   
-        </div>
-        </div>
-        <h2 className='font-bold text-primary'>{budget.amount} Rs</h2>
-        </div>
-        <div className='mt-5'>
-            <div className='flex items-center justify-between mb-3'>
-                <h2 className='text-xs text-primary'>${budget.totalSpend?budget.totalSpend:0} Spend</h2>
-                <h2 className='text-xs text-primary'>${budget.amount-budget.totalSpend} Remaining</h2>
-            </div>
-            <div className='w-full bg-green-100 h-2 rounded-full'>
-                <div className='w-[40%] bg-primary h-2 rounded-full'>
+    const id = budget?.id
 
+    const handleClick = () => {
+        console.debug('BudgetItem clicked id:', id)
+    }
+
+    return (
+        <Link href={id ? `/dashboard/expenses/${id}` : '#'} className="block" onClick={handleClick}>
+            <div className="p-5 border rounded-lg gap-2 hover:shadow-sm cursor-pointer bg-white">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="text-2xl p-3 bg-green-100 rounded-full">{budget?.icon ?? '🏷️'}</div>
+                        <div>
+                            <div className="font-semibold">{budget?.name ?? 'Untitled'}</div>
+                            <div className="text-sm text-gray-500">{(budget?.totalItem ?? 0) + ' Item'}</div>
+                        </div>
+                    </div>
+                    <div className="text-right">
+                        <div className="font-bold">{budget?.amount ?? '-'}</div>
+                    </div>
                 </div>
-
             </div>
-        </div>
-
-         </div>
-    
-  )
+        </Link>
+    )
 }
 
 export default BudgetItem
