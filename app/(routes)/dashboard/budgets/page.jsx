@@ -1,8 +1,14 @@
 import React from 'react'
+import BudgetList from './_components/BudgetList'
 
 function Budget() {
   return (
-    <div>Budget</div>
+    <div>
+      <h2>My Budgets</h2>
+      <BudgetList />
+      
+    </div>
+
   )
 }
 
