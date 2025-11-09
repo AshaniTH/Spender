@@ -11,7 +11,7 @@ function BudgetItem({ budget }) {
 
     return (
         <Link href={id ? `/dashboard/expenses/${id}` : '#'} className="block" onClick={handleClick}>
-            <div className="p-5 border rounded-lg gap-2 hover:shadow-sm cursor-pointer bg-white">
+            <div className="p-4 border rounded-lg bg-white hover:shadow-sm cursor-pointer">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <div className="text-2xl p-3 bg-green-100 rounded-full">{budget?.icon ?? '🏷️'}</div>
@@ -22,6 +22,19 @@ function BudgetItem({ budget }) {
                     </div>
                     <div className="text-right">
                         <div className="font-bold">{budget?.amount ?? '-'}</div>
+                    </div>
+                </div>
+
+                <div className="mt-3">
+                    <div className="flex items-center justify-between mb-2 text-xs text-gray-600">
+                        <div>{(budget?.totalSpend ?? 0) + ' Spent'}</div>
+                        <div>{(budget?.amount && budget?.totalSpend != null) ? (Number(budget.amount) - Number(budget.totalSpend)) : '-'} Remaining</div>
+                    </div>
+                    <div className="w-full bg-green-100 h-2 rounded-full">
+                        <div
+                            className="bg-primary h-2 rounded-full"
+                            style={{ width: budget?.amount && budget?.totalSpend != null ? `${Math.min(100, Math.round((Number(budget.totalSpend) / Number(budget.amount || 1)) * 100))}%` : '0%' }}
+                        />
                     </div>
                 </div>
             </div>

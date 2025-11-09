@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useParams } from 'next/navigation'
+import BudgetItem from '../../budgets/_components/BudgetItem'
 
 function ExpensesScreen() {
   const { user } = useUser()
@@ -51,12 +52,12 @@ function ExpensesScreen() {
   if (!budget) return <div className="p-4">No budget selected</div>
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-semibold">{budget.name}</h1>
-      <div className="text-sm text-gray-600">Icon: {budget.icon}</div>
-      <div className="mt-2">Amount: {budget.amount}</div>
-      <div className="mt-2">Items: {budget.totalItem ?? 0}</div>
-      <div className="mt-2">Total spent: {budget.totalSpend ?? 0}</div>
+    <div className="p-10">
+      <h2 className="text-2xl font-semibold">My Expenses</h2>
+      <div>
+        <BudgetItem budget={budget} />
+      </div>
+     
     </div>
   )
 }
