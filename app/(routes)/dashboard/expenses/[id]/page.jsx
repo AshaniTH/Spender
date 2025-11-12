@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useParams } from 'next/navigation'
 import BudgetItem from '../../budgets/_components/BudgetItem'
+import AddExpense from '../_components/AddExpense'
 
 function ExpensesScreen() {
   const { user } = useUser()
@@ -53,7 +54,10 @@ function ExpensesScreen() {
 
   return (
     <div className="p-10">
-      <h2 className="text-2xl font-semibold">My Expenses</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-semibold">My Expenses</h2>
+        <AddExpense />
+      </div>
       <div>
         <BudgetItem budget={budget} />
       </div>
