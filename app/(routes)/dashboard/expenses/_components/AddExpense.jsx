@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 function AddExpense() {
   return (
     <div className="mt-4">
-      <Button variant="outline">Add Expense</Button>
+      <h2 className="font-bold text-lg">Add Expense</h2>
     </div>
   )
 }
