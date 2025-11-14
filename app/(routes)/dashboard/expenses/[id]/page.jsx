@@ -53,13 +53,15 @@ function ExpensesScreen() {
   if (!budget) return <div className="p-4">No budget selected</div>
 
   return (
-    <div className="p-10">
-      <div className="flex items-center justify-between">
+    <div className="p-10 gap-3 space-y-5">
+      
         <h2 className="text-2xl font-semibold">My Expenses</h2>
+        <div className="flex  items-center justify-between">
         <AddExpense />
-      </div>
-      <div>
+      
+  <div>
         <BudgetItem budget={budget} />
+      </div>
       </div>
      
     </div>
