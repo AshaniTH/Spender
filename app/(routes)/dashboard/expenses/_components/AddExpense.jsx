@@ -14,7 +14,15 @@ function AddExpense() {
         />
 
       </div>
-      
+      <div className='mt-2'>
+        <h2 className='text-black font-medium my-1'></h2>
+        <Input placeholder='Expense Name' className='w-full mb-2' 
+        onChange={(e) => setInCacheMap(e.target.value)}
+        />
+
+      </div>
+      <Button className='mt-2'>Add Expense</Button>
+
     </div>
   )
 }
