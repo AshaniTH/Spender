@@ -10,7 +10,7 @@ function BudgetItem({ budget }) {
     }
 
     return (
-        <Link href={id ? `/dashboard/expenses/${id}` : '#'} className="block" onClick={handleClick}>
+        <Link href={id ? `/dashboard/expenses/${id}` : '#'} className="flex" onClick={handleClick}>
             <div className="p-4 border rounded-lg bg-white hover:shadow-sm cursor-pointer">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
