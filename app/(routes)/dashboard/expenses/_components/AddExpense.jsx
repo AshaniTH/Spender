@@ -9,8 +9,12 @@ function AddExpense() {
       <h2 className="font-bold text-lg">Add Expense</h2>
       <div className='mt-2'>
         <h2 className='text-black font-medium my-1'></h2>
-        <Input placeholder='Expense Name' className='w-full mb-2' />
+        <Input placeholder='Expense Name' className='w-full mb-2' 
+        onChange={(e) => setInCacheMap(e.target.value)}
+        />
+
       </div>
+      
     </div>
   )
 }
