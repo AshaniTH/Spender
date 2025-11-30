@@ -9,7 +9,7 @@ function AddExpense() {
   const [amount, setAmount] = useState();
 
   return (
-    <div className="border p-5 rounded-lg">
+    <div className="border m-2  p-5 rounded-lg">
       <h2 className="font-bold text-lg">Add Expense</h2>
       <div className='mt-2'>
         <h2 className='text-black font-medium my-1'></h2>
